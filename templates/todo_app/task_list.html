@@ -3,7 +3,7 @@
 {% block content %}
   <h1>
     TODO list
-    <a href="" class="btn btn-primary link-to-page">
+    <a href="{% url 'task-create' %}" class="btn btn-primary link-to-page">
       ADD TASK
     </a>
   </h1>
@@ -14,9 +14,9 @@
     {% for task in task_list %}
       <h2><strong>{{ task.content }}</strong></h2>
         {% if task.is_done %}
-          <p>✅ Done!<a href="" class="btn btn-secondary link-to-page">Undo</a></p>
+          <p>✅ Done!<a href="{% url 'task-status-change' pk=task.pk %}" class="btn btn-secondary link-to-page">Undo</a></p>
         {% else %}
-          <p>⏳ in process...<a href="" class="btn btn-success link-to-page">Complete</a></p>
+          <p>⏳ in process...<a href="{% url 'task-status-change' pk=task.pk %}" class="btn btn-success link-to-page">Complete</a></p>
         {% endif %}
       <p>
         Created at {{ task.datetime }}
@@ -29,8 +29,8 @@
         {% for tag in task.tags.all %}
           {{ tag }}
         {% endfor %}
-        <a href="" class="btn btn-link">Update</a>
-        <a href="" class="btn btn-link">Delete</a>
+        <a href="{% url 'task-update' pk=task.pk %}" class="btn btn-link">Update</a>
+        <a href="{% url 'task-delete' pk=task.pk %}" class="btn btn-link">Delete</a>
       </p>
       <hr>
       {% endfor %}
