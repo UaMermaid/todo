@@ -13,11 +13,22 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from todo_app.views import TagListView, TagCreateView, TagUpdateView, TagDeleteView, TaskListView, TaskCreateView, \
-    TaskUpdateView, TaskDeleteView
+from todo_app.views import (
+    TagListView,
+    TagCreateView,
+    TagUpdateView,
+    TagDeleteView,
+    TaskListView,
+    TaskCreateView,
+    TaskUpdateView,
+    TaskDeleteView,
+    task_status_change
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +40,5 @@ urlpatterns = [
     path("tasks/create/", TaskCreateView.as_view(), name="task-create"),
     path("tasks/<int:pk>/update/", TaskUpdateView.as_view(), name="task-update"),
     path("tasks/<int:pk>/delete/", TaskDeleteView.as_view(), name="task-delete"),
-]
+    path("tasks/<int:pk>/change_status/", task_status_change, name="task-status-change"),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
